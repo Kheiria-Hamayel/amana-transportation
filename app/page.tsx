@@ -16,6 +16,51 @@ declare global {
   }
 }
 
+interface Incident {
+  id: number;
+  type: string;
+  description: string;
+  reported_by: string;
+  reported_time: string;
+  status: string;
+  priority: string;
+}
+
+interface VehicleInfo {
+  license_plate: string;
+  model: string;
+  year: number;
+  fuel_level: number;
+  last_maintenance: string;
+}
+
+interface RouteInfo {
+  total_distance: number;
+  average_speed: number;
+  estimated_completion: string;
+  frequency_minutes: number;
+}
+
+interface OperationalSummary {
+  total_buses: number;
+  active_buses: number;
+  maintenance_buses: number;
+  out_of_service_buses: number;
+  total_capacity: number;
+  current_passengers: number;
+  average_utilization: number;
+}
+
+interface Filters {
+  available_statuses: string[];
+  available_routes: string[];
+  applied: {
+    status: string | null;
+    busId: number | null;
+    routeNumber: string | null;
+  };
+}
+
 interface BusStop {
   id: number;
   name: string;
@@ -23,6 +68,13 @@ interface BusStop {
   longitude: number;
   estimated_arrival: string;
   is_next_stop: boolean;
+}
+
+interface Driver {
+  name: string;
+  id: string;
+  shift_start: string;
+  shift_end: string;
 }
 
 interface BusLine {
@@ -41,6 +93,10 @@ interface BusLine {
     utilization_percentage: number;
   };
   bus_stops: BusStop[];
+  driver: Driver;
+  incidents: Incident[]; // Added incidents
+  vehicle_info: VehicleInfo; // Added vehicle_info
+  route_info: RouteInfo;
 }
 
 interface Dataset {
@@ -53,6 +109,8 @@ interface Dataset {
     description: string;
   };
   bus_lines: BusLine[];
+  operational_summary: OperationalSummary; // Added operational_summary
+  filters: Filters;
 }
 
 // Replicating the raw data structure
